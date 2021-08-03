@@ -3,3 +3,5 @@
 A simple point-cloud compression algorithm.
 
 ** Test
+
+Run =pytest path/to/simple_pcc/tests/=.
