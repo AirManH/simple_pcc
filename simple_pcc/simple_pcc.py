@@ -10,29 +10,23 @@ import open3d as o3d
 class Decoder:
     @staticmethod
     def bytes_to_points(
-        bts: bytes, depth: int, center: np.ndarray = None, size: float = None
-    ) -> np.ndarray:
+        bts: Iterable[int], depth: int, center: np.ndarray = None, size: float = None
+    ) -> Iterable[np.ndarray]:
         if center is None:
             center = np.array([0.0, 0.0, 0.0])
         if size is None:
             size = 1.0
-        points: List[np.ndarray] = []
         # {{{ auxiliary array
         # {idx: int, byte position in parent's byte,
         #  dep: int, level(start from 0),
         #  siz: float, edge size of the cube
         #  pos: np.ndarray, position}
         NodeInfo = collections.namedtuple("NodeInfo", ["idx", "dep", "size", "pos"])
-        nodes_info: List[NodeInfo] = []
+        nodes_info: List[NodeInfo] = [NodeInfo(-1, 0, size, center)]
         # }}}
-        byte_list: List[int] = list(bts)
         # Read the root node
         cur_byte: int = -1
-        while len(byte_list) > 0:
-            if cur_byte == -1:
-                nodes_info.append(NodeInfo(-1, 0, size, center))
-
-            cur_byte = byte_list.pop(0)
+        for cur_byte in bts:
             cur_node_info = nodes_info.pop(0)
 
             logging.debug(
@@ -43,7 +37,7 @@ class Decoder:
             if cur_node_info.dep > depth:
                 break
             if cur_node_info.dep == 0 and depth == 0:
-                points.append(center)
+                yield center
                 break
 
             child_indexes = Decoder._byte_to_child_indexes(cur_byte)
@@ -56,10 +50,9 @@ class Decoder:
                     index, cur_node_info.dep + 1, cur_node_info.size * 0.5, child_pos
                 )
                 if child_node_info.dep == depth:
-                    points.append(child_pos)
+                    yield child_pos
                     logging.debug(" " * 2 + f"Add a child: {child_node_info}")
                 nodes_info.append(child_node_info)
-        return np.asarray(points)
 
     @staticmethod
     def _byte_to_child_indexes(b: int) -> List[int]:
