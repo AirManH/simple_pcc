@@ -6,7 +6,7 @@ import numpy as np
 import open3d as o3d
 import pytest
 
-from simple_pcc.simple_pcc import Decoder, Encoder
+from simple_pcc import Decoder, Encoder
 
 current_file_dir = pathlib.Path(__file__).parent.resolve()
 path_to_simple_pcc = (pathlib.Path(__file__).parent / "..").resolve()
