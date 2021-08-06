@@ -1,6 +1,5 @@
 import pathlib
 import sys
-from typing import List
 
 import numpy as np
 import open3d as o3d
