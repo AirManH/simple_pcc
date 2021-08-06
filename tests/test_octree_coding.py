@@ -48,7 +48,9 @@ def test_octree_coding(depth: int):
     ]
     for test_sample in test_samples:
         bts = bytes(test_sample["bytes"])
-        pts = list(Decoder.bytes_to_points(bts, test_sample["depth"], np.array([0, 0, 0]), 1))
+        pts = list(
+            Decoder.bytes_to_points(bts, test_sample["depth"], np.array([0, 0, 0]), 1)
+        )
         assert np.allclose(pts, np.array(test_sample["ans"]))
 
 

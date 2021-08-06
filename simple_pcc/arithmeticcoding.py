@@ -15,7 +15,7 @@ from typing import Type
 class ArithmeticCoderBase:
 
     # Constructs an arithmetic coder, which initializes the code range.
-    def __init__(self, numbits : int):
+    def __init__(self, numbits: int):
         """
         :param numbits: int. Number of bits for the 'low' and 'high' state variables.
                         The larger this number is, the more accuracy the coding will be.
@@ -74,9 +74,9 @@ class ArithmeticCoderBase:
         low = self.low
         high = self.high
         if (
-                low >= high
-                or (low & self.state_mask) != low
-                or (high & self.state_mask) != high
+            low >= high
+            or (low & self.state_mask) != low
+            or (high & self.state_mask) != high
         ):
             raise AssertionError("Low or high out of range")
         range = high - low + 1
@@ -200,9 +200,9 @@ class ArithmeticDecoder(ArithmeticCoderBase):
 
         symbol = start
         assert (
-                freqs.get_low(symbol) * range // total
-                <= offset
-                < freqs.get_high(symbol) * range // total
+            freqs.get_low(symbol) * range // total
+            <= offset
+            < freqs.get_high(symbol) * range // total
         )
         self.update(freqs, symbol)
         if not (self.low <= self.code <= self.high):
@@ -214,9 +214,9 @@ class ArithmeticDecoder(ArithmeticCoderBase):
 
     def underflow(self):
         self.code = (
-                (self.code & self.half_range)
-                | ((self.code << 1) & (self.state_mask >> 1))
-                | self.read_code_bit()
+            (self.code & self.half_range)
+            | ((self.code << 1) & (self.state_mask >> 1))
+            | self.read_code_bit()
         )
 
     # Returns the next bit (0 or 1) from the input stream. The end
