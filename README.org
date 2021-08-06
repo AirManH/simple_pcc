@@ -2,6 +2,50 @@
 
 A simple point-cloud compression algorithm.
 
+** Usage
+
+=simple_pcc= implements a
+/context-based octree coding algorithm for point cloud geometry/.
+This algorithm is based on arithmetic coding, and it uses the
+*position in parent node in octree* as context.
+Refer to
+[[https://ieeexplore.ieee.org/document/8451802/][Intra-Frame Context-Based Octree Coding for Point-Cloud Geometry]]
+for more details.
+
+*** Compress
+
+To *compress* a point cloud file
+(for supported file type, see
+[[http://www.open3d.org/docs/release/tutorial/geometry/file_io.html#Point-cloud][this page]]
+):
+
+#+begin_src bash
+python path/to/simple_pcc/cxt_arith_compress.py InputFile OutputFile OutputContextFile
+#+end_src
+
+For example:
+
+#+begin_src bash
+python cxt_arith_compress.py bunny.ply bunny-com.bin bunny-cxt.bin
+#+end_src
+
+*** Decompress
+
+To *decompress* a point cloud file
+(for supported file type, see
+[[http://www.open3d.org/docs/release/tutorial/geometry/file_io.html#Point-cloud][this page]]
+):
+
+#+begin_src bash
+python path/to/simple_pcc/cxt_arith_decompress.py InputFile InputContextFile OutputFile
+#+end_src
+
+For example:
+
+#+begin_src bash
+python cxt_arith_decompress.py bunny-com.bin bunny-cxt.bin bunny.ply
+#+end_src
+
 ** Test
 
 Run =pytest path/to/simple_pcc/tests/=.
