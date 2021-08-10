@@ -1,5 +1,5 @@
 import sys
-from typing import Iterable, Dict
+from typing import Iterable, Dict, Generator
 
 import numpy as np
 import open3d as o3d
@@ -33,7 +33,7 @@ def main(args):
 def decompress_to_bytes(
     bitin_data: arithmeticcoding.BitInputStream,
     bitin_context: arithmeticcoding.BitInputStream,
-) -> Iterable[int]:
+) -> Generator[int]:
     context_num = 9
     all_context = tuple(range(context_num))
     symbol_num = 0x100  # = 2^8

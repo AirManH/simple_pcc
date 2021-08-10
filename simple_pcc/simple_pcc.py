@@ -1,7 +1,7 @@
 import collections
 import copy
 import logging
-from typing import Iterable, List
+from typing import Iterable, List, Generator
 
 import numpy as np
 import open3d as o3d
@@ -11,7 +11,7 @@ class Decoder:
     @staticmethod
     def bytes_to_points(
         bts: Iterable[int], depth: int, center: np.ndarray = None, size: float = None
-    ) -> Iterable[np.ndarray]:
+    ) -> Generator[np.ndarray]:
         if center is None:
             center = np.array([0.0, 0.0, 0.0])
         if size is None:
@@ -115,7 +115,7 @@ class Encoder:
     @staticmethod
     def get_octree_encoding(
         point_cloud: o3d.geometry.PointCloud, max_depth: int
-    ) -> Iterable[int]:
+    ) -> Generator[int]:
         # generate the OCTREE
         point_cloud = Encoder._refine_point_cloud(point_cloud)
         octree = Encoder._get_octree(point_cloud, max_depth)

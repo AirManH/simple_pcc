@@ -1,6 +1,6 @@
 import contextlib
 import sys
-from typing import Iterable, List, Tuple, Dict
+from typing import Iterable, List, Tuple, Dict, Generator
 
 import open3d as o3d
 
@@ -13,7 +13,7 @@ class ContextEncoder(simple_pcc.Encoder):
     @staticmethod
     def get_octree_encoding(
         point_cloud: o3d.geometry.PointCloud, max_depth: int
-    ) -> Iterable[Tuple[int, int]]:
+    ) -> Generator[Tuple[int, int]]:
         # generate the OCTREE
         point_cloud = simple_pcc.Encoder._refine_point_cloud(point_cloud)
         octree = simple_pcc.Encoder._get_octree(point_cloud, max_depth)
@@ -95,7 +95,7 @@ def compress(stream: Iterable[Tuple[int, int]], bitout_data, bitout_context):
     # }}}
 
     # append the EOF to end of stream {{{
-    def stream_with_eof(stream: Iterable[Tuple[int, int]]) -> Iterable[Tuple[int, int]]:
+    def stream_with_eof(stream: Iterable[Tuple[int, int]]) -> Generator[Tuple[int, int]]:
         eof_symbol = symbol_num
         yield from stream
         yield eof_symbol, 0
