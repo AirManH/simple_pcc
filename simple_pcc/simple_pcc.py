@@ -11,7 +11,7 @@ class Decoder:
     @staticmethod
     def bytes_to_points(
         bts: Iterable[int], depth: int, center: np.ndarray = None, size: float = None
-    ) -> Generator[np.ndarray]:
+    ) -> Iterable[np.ndarray]:
         if center is None:
             center = np.array([0.0, 0.0, 0.0])
         if size is None:
@@ -40,10 +40,10 @@ class Decoder:
                 yield center
                 break
 
-            child_indexes = Decoder._byte_to_child_indexes(cur_byte)
+            child_indexes = Decoder.byte_to_child_indexes(cur_byte)
             logging.debug(" " * 2 + f"Child indexes: {child_indexes}")
             for index in child_indexes:
-                child_pos = Decoder._index_to_child_center(
+                child_pos = Decoder.index_to_child_center(
                     cur_node_info.pos, index, cur_node_info.size
                 )
                 child_node_info = NodeInfo(
@@ -55,7 +55,7 @@ class Decoder:
                 nodes_info.append(child_node_info)
 
     @staticmethod
-    def _byte_to_child_indexes(b: int) -> List[int]:
+    def byte_to_child_indexes(b: int) -> List[int]:
         """Translate a byte to list of child index
         0xFF -> [0, 1, ..., 7]
         0x11 -> [3, 7]
@@ -71,7 +71,7 @@ class Decoder:
         return indexes
 
     @staticmethod
-    def _index_to_child_center(
+    def index_to_child_center(
         center: np.ndarray, index: int, size: float
     ) -> np.ndarray:
         idx_to_vec = {
@@ -115,7 +115,7 @@ class Encoder:
     @staticmethod
     def get_octree_encoding(
         point_cloud: o3d.geometry.PointCloud, max_depth: int
-    ) -> Generator[int]:
+    ) -> Iterable[int]:
         # generate the OCTREE
         point_cloud = Encoder._refine_point_cloud(point_cloud)
         octree = Encoder._get_octree(point_cloud, max_depth)
