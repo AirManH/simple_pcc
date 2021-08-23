@@ -15,7 +15,7 @@ sys.path.insert(0, str(path_to_simple_pcc))
 def oct_bytes_print(bts: bytes):
     print()
     for bt in bts:
-        print(Decoder._byte_to_child_indexes(bt), end=", ")
+        print(Decoder.byte_to_child_indexes(bt), end=", ")
     print()
 
 
