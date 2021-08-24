@@ -81,6 +81,13 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "-o", "--output", type=str, required=True, help="output point cloud file"
     )
+    parser.add_argument(
+        "-d",
+        "--depth",
+        type=int,
+        default=9,
+        help="the depth of octree coding (default: 9)",
+    )
 
     return parser
 
@@ -91,9 +98,7 @@ def main():
     args = parser.parse_args()
 
     input_file, aux_file, output_file = args.input, args.aux, args.output
-
-    # TODO ugly design here
-    depth = 9
+    depth = args.depth
 
     with contextlib.closing(
         arithmeticcoding.BitInputStream(open(aux_file, "rb"))

@@ -60,6 +60,13 @@ def get_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "-a", "--aux", type=str, required=True, help="output auxiliary file"
     )
+    parser.add_argument(
+        "-d",
+        "--depth",
+        type=int,
+        default=9,
+        help="the depth of octree coding (default: 9)",
+    )
 
     return parser
 
@@ -70,9 +77,7 @@ def main():
     args = parser.parse_args()
 
     input_file, output_file, aux_file = args.input, args.output, args.aux
-
-    # TODO ugly design here
-    depth = 9
+    depth = args.depth
 
     point_cloud: o3d.geometry.PointCloud = o3d.io.read_point_cloud(input_file)
     octree_coding = list(
