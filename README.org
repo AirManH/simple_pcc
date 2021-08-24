@@ -25,14 +25,24 @@ To *compress* a point cloud file
 [[http://www.open3d.org/docs/release/tutorial/geometry/file_io.html#Point-cloud][this page]]
 ):
 
-#+begin_src bash
-python path/to/simple_pcc/cxt_arith_compress.py InputFile OutputFile OutputAuxFile
-#+end_src
+#+begin_example
+usage: cxt_arith_compress.py [-h] -i INPUT -o OUTPUT -a AUX
+
+A simple point-cloud compression algorithm.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        input point cloud file
+  -o OUTPUT, --output OUTPUT
+                        output binary file
+  -a AUX, --aux AUX     output auxiliary file
+#+end_example
 
 For example:
 
 #+begin_src bash
-python cxt_arith_compress.py bunny.ply bunny.bin bunny.aux
+python cxt_arith_compress.py -i bunny.ply -o bunny.bin -a bunny.aux
 #+end_src
 
 After this, you will get 9 files:
@@ -45,14 +55,24 @@ bunny.aux, bunny.bin.0, bunny.bin.1, ..., bunny.bin.7
 
 To *decompress*:
 
-#+begin_src bash
-python path/to/simple_pcc/cxt_arith_decompress.py InputFile InputAuxFile OutputFile
-#+end_src
+#+begin_example
+usage: cxt_arith_decompress.py [-h] -i INPUT -a AUX -o OUTPUT
+
+A simple point-cloud decompression algorithm.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        input binary file
+  -a AUX, --aux AUX     input auxiliary file
+  -o OUTPUT, --output OUTPUT
+                        output point cloud file
+#+end_example
 
 For example:
 
 #+begin_src bash
-python cxt_arith_decompress.py bunny.bin bunny.aux bunny.ply
+python cxt_arith_decompress.py -i bunny.bin -a bunny.aux -o bunny.ply
 #+end_src
 
 ** Test
