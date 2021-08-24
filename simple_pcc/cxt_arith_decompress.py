@@ -37,12 +37,14 @@ class CxtArithDecoder:
         #  siz: float, edge size of the cube
         #  pos: np.ndarray, position}
         Node = collections.namedtuple("Node", ["idx", "dep", "size", "pos"])
-        unmeet_nodes: List[Node] = [Node(-1, 0, size, center)]
-        unmeet_bytes: List[int] = [root_byte]
+        unmeet_nodes = collections.deque([Node(-1, 0, size, center)])
+        unmeet_bytes = collections.deque([root_byte])
+
+        bytes_deque = [collections.deque(bts) for bts in bytes_list]
 
         while len(unmeet_bytes) > 0:
-            cur_byte = unmeet_bytes.pop(0)
-            cur_node = unmeet_nodes.pop(0)
+            cur_byte = unmeet_bytes.popleft()
+            cur_node = unmeet_nodes.popleft()
             if cur_node.dep > depth:
                 break
             # If this node is not leaf node, it must has corresponding octree coding,
@@ -61,7 +63,7 @@ class CxtArithDecoder:
                 if child_node.dep == depth:
                     yield child_node.pos
                 else:
-                    next_byte = bytes_list[idx].pop(0)
+                    next_byte = bytes_deque[idx].popleft()
                     unmeet_bytes.append(next_byte)
 
 
