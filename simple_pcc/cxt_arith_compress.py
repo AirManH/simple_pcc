@@ -1,12 +1,12 @@
 import contextlib
 import sys
-from typing import Iterable, List, Tuple, Dict, Sequence, BinaryIO
 from collections import deque
-
-import open3d as o3d
+from typing import Dict, Iterable, Sequence, Tuple
 
 import arithmeticcoding
 import context_model
+import open3d as o3d
+
 import simple_pcc
 
 # TODO Move these global variables to a single file or class
