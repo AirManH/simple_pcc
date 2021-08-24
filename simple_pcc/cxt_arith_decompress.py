@@ -1,13 +1,13 @@
+import argparse
 import collections
 import contextlib
-import sys
-from typing import Iterable, Dict, List, Sequence
-
-import numpy as np
-import open3d as o3d
+from typing import Dict, Iterable, List, Sequence
 
 import arithmeticcoding
 import context_model
+import numpy as np
+import open3d as o3d
+
 import simple_pcc
 
 # Number of sub-nodes that each octree node has
@@ -65,14 +65,30 @@ class CxtArithDecoder:
                     unmeet_bytes.append(next_byte)
 
 
-def main(args):
-    # Handle command line arguments
-    if len(args) != 3:
-        sys.exit(
-            "Usage: python cxt_arith_decompress.py InputFile InputAuxFile OutputFile"
-        )
+def get_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="A simple point-cloud decompression algorithm."
+    )
 
-    input_file, aux_file, output_file = args
+    parser.add_argument(
+        "-i", "--input", type=str, required=True, help="input binary file"
+    )
+    parser.add_argument(
+        "-a", "--aux", type=str, required=True, help="input auxiliary file"
+    )
+    parser.add_argument(
+        "-o", "--output", type=str, required=True, help="output point cloud file"
+    )
+
+    return parser
+
+
+def main():
+    # Handle command line arguments
+    parser = get_parser()
+    args = parser.parse_args()
+
+    input_file, aux_file, output_file = args.input, args.aux, args.output
 
     # TODO ugly design here
     depth = 9
@@ -150,4 +166,4 @@ def decompress(
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()

@@ -1,5 +1,5 @@
+import argparse
 import contextlib
-import sys
 from collections import deque
 from typing import Dict, Iterable, Sequence, Tuple
 
@@ -46,13 +46,30 @@ class ContextEncoder(simple_pcc.Encoder):
         # }}}
 
 
-def main(args):
+def get_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="A simple point-cloud compression algorithm."
+    )
+
+    parser.add_argument(
+        "-i", "--input", type=str, required=True, help="input point cloud file"
+    )
+    parser.add_argument(
+        "-o", "--output", type=str, required=True, help="output binary file"
+    )
+    parser.add_argument(
+        "-a", "--aux", type=str, required=True, help="output auxiliary file"
+    )
+
+    return parser
+
+
+def main():
     # Handle command line arguments
-    if len(args) != 3:
-        sys.exit(
-            "Usage: python cxt_arith_compress.py InputFile OutputFile OutputAuxFile"
-        )
-    input_file, output_file, aux_file = args
+    parser = get_parser()
+    args = parser.parse_args()
+
+    input_file, output_file, aux_file = args.input, args.output, args.aux
 
     # TODO ugly design here
     depth = 9
@@ -168,4 +185,4 @@ def compress(
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
