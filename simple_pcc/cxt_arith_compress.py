@@ -1,6 +1,7 @@
 import contextlib
 import sys
 from typing import Iterable, List, Tuple, Dict, Sequence, BinaryIO
+from collections import deque
 
 import open3d as o3d
 
@@ -25,12 +26,12 @@ class ContextEncoder(simple_pcc.Encoder):
         octree = simple_pcc.Encoder._get_octree(point_cloud, max_depth)
         # {{{ Do BFS and encoding
         root: o3d.geometry.OctreeInternalNode = octree.root_node
-        unmeet_nodes: List[o3d.geometry.OctreeInternalNode] = [root]
+        unmeet_nodes: deque = deque([root])
         # The root's position in parent is -1
-        positions_in_parent: List[int] = [-1]
+        positions_in_parent: deque = deque([-1])
         while len(unmeet_nodes) > 0:
-            cur_node = unmeet_nodes.pop(0)
-            pos = positions_in_parent.pop(0)
+            cur_node = unmeet_nodes.popleft()
+            pos = positions_in_parent.popleft()
             # {{{ Do encoding
             byte = 0x0
             for index, child in enumerate(cur_node.children):
