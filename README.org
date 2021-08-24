@@ -26,7 +26,7 @@ To *compress* a point cloud file
 ):
 
 #+begin_example
-usage: cxt_arith_compress.py [-h] -i INPUT -o OUTPUT -a AUX
+usage: cxt_arith_compress.py [-h] -i INPUT -o OUTPUT -a AUX [-d DEPTH]
 
 A simple point-cloud compression algorithm.
 
@@ -37,6 +37,8 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         output binary file
   -a AUX, --aux AUX     output auxiliary file
+  -d DEPTH, --depth DEPTH
+                        the depth of octree coding (default: 9)
 #+end_example
 
 For example:
@@ -56,7 +58,7 @@ bunny.aux, bunny.bin.0, bunny.bin.1, ..., bunny.bin.7
 To *decompress*:
 
 #+begin_example
-usage: cxt_arith_decompress.py [-h] -i INPUT -a AUX -o OUTPUT
+usage: cxt_arith_decompress.py [-h] -i INPUT -a AUX -o OUTPUT [-d DEPTH]
 
 A simple point-cloud decompression algorithm.
 
@@ -67,6 +69,8 @@ optional arguments:
   -a AUX, --aux AUX     input auxiliary file
   -o OUTPUT, --output OUTPUT
                         output point cloud file
+  -d DEPTH, --depth DEPTH
+                        the depth of octree coding (default: 9)
 #+end_example
 
 For example:
