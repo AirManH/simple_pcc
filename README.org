@@ -16,6 +16,11 @@ The picture below describes the system framework of the algorithm.
 
 [[./readme_img/frame.png]]
 
+** Requirements
+
+- python >= 3.7
+- =pip install open3d numpy=
+
 ** Usage
 
 *** Compress
@@ -82,3 +87,7 @@ python cxt_arith_decompress.py -i bunny.bin -a bunny.aux -o bunny.ply
 ** Test
 
 Run =pytest path/to/simple_pcc/tests/=.
+
+** Benchmark
+
+To benchmark the algorithm, see [[./benchmark/README.org]].

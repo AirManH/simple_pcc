@@ -1,0 +1,54 @@
+* Benchmark
+
+** Requirements
+
+1. python >= 3.7
+2. =pip install open3d numpy altair altair_saver p_tqdm pandas=
+3. =python download.py= to download datasets.
+4. Build external project:
+   1. Build
+      [[https://github.com/MPEGGroup/mpeg-pcc-tmc13/tree/release-v14.0][mpeg-pcc-tmc13]] v14.0,
+      and add =tmc3= to PATH.
+   2. Build
+      [[https://github.com/google/draco][draco]] v1.4.1,
+      and add =draco_encoder= to PATH.
+   3. Download two python scripts:
+      [[https://raw.githubusercontent.com/nayuki/Reference-arithmetic-coding/master/python/arithmetic-compress.py][arithmetic-compress.py]]
+      and
+      [[https://raw.githubusercontent.com/nayuki/Reference-arithmetic-coding/master/python/arithmeticcoding.py][arithmeticcoding.py]]
+      to current directory.
+
+** Usage
+
+#+begin_example
+usage: benchmark.py [-h]
+                    [-d {ricardo9,phil9,sarah9,david9,andrew9} [{ricardo9,phil9,sarah9,david9,andrew9} ...]]
+                    [-a {mpeg,or,pac,draco,ac} [{mpeg,or,pac,draco,ac} ...]]
+                    [-t TMP_DIR] -o OUTPUT [-oi OUTPUT_IMAGE]
+                    [-ois OUTPUT_IMAGE_SCALE] [--cpu CPU]
+
+Benchmark the simple_pcc.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d {ricardo9,phil9,sarah9,david9,andrew9} [{ricardo9,phil9,sarah9,david9,andrew9} ...], --datasets {ricardo9,phil9,sarah9,david9,andrew9} [{ricardo9,phil9,sarah9,david9,andrew9} ...]
+                        datasets to benchmark
+  -a {mpeg,or,pac,draco,ac} [{mpeg,or,pac,draco,ac} ...], --algorithms {mpeg,or,pac,draco,ac} [{mpeg,or,pac,draco,ac} ...]
+                        algorithms to benchmark
+  -t TMP_DIR, --tmp_dir TMP_DIR
+                        temporary directory for saving intermediate files (default:
+                        tmp)
+  -o OUTPUT, --output OUTPUT
+                        output csv file
+  -oi OUTPUT_IMAGE, --output_image OUTPUT_IMAGE
+                        output image
+  -ois OUTPUT_IMAGE_SCALE, --output_image_scale OUTPUT_IMAGE_SCALE
+                        output image scale (default: 3.0)
+  --cpu CPU             number of CPUs to use (default: use all cpus)
+#+end_example
+
+For example:
+
+#+begin_example
+python benchmark.py -d david9 -a mpeg draco pac ac or -o david9.csv -oi david9.png
+#+end_example
