@@ -4,13 +4,13 @@ A simple point-cloud compression algorithm.
 
 ** Introduction
 
+This project try to *reproduce* the algorithm that was proposed in
+[[https://ieeexplore.ieee.org/document/8451802/][Intra-Frame Context-Based Octree Coding for Point-Cloud Geometry]]
+
 =simple_pcc= implements a
 /context-based octree coding algorithm for point cloud geometry/.
 This algorithm is based on arithmetic coding, and it uses the
 *position in parent node in octree* as context.
-Refer to
-[[https://ieeexplore.ieee.org/document/8451802/][Intra-Frame Context-Based Octree Coding for Point-Cloud Geometry]]
-for more details.
 
 The picture below describes the system framework of the algorithm.
 
